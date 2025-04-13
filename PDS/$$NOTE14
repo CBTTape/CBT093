@@ -1,0 +1,18 @@
+ISPF stats (in the pds directory entry) have packed number fields:
+They are "create date" and "last changed date".
+
+These are always positive numbers, and it seems (from our inquiring of
+ISPF developers), that the sign bit in these numbers is always X'0F'.
+However, X'0C' is also valid for a positive packed decimal number.
+
+Several user programs have had trouble when X'0C' is the sign.
+One of these programs has been OFFLOADW.  OFFLOADW would not produce
+./ADD NAME cards containing ISPF statistics information, if the sign
+bit of these numbers was X'0C'.  Therefore, in OFFLOADW 10.2, the
+program was modified to turn all of the X'0C' numbers to X'0F'.
+
+The change was made in July 2022 by "Mr. Updater", who in reality, is
+an extremely skilled Assembler programmer (and a very good guy).
+
+(NOTE is from Sam Golob    email:  sbgolob@cbttape.org   July 2022.
+
